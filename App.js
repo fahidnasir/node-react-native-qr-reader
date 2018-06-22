@@ -20,6 +20,7 @@ export default class App extends React.Component {
           ref={ref => {
             this.camera = ref;
           }}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
           onBarCodeRead={this.onBarCodeRead}
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
