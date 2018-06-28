@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+// import { RNCamera } from 'react-native-camera';
+import Camera from 'react-native-camera';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -10,13 +11,15 @@ export default class App extends React.Component {
     };
   }
 
-  onBarCodeRead = e => this.setState({ qrcode: e.data });
+  onBarCodeRead(e) {
+    this.setState({ qrcode: "Type: " + e.type + "\nData: " + e.data});
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>This is Homepage for QR Reader</Text>
-        <RNCamera
+        {/* <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
@@ -29,7 +32,14 @@ export default class App extends React.Component {
           permissionDialogMessage={
             'We need your permission to use your camera phone'
           }
-        >
+        > */}
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
+          style={styles.preview}
+            aspect={Camera.constants.Aspect.fill}>
           <Text
             style={{
               backgroundColor: 'white'
@@ -37,7 +47,8 @@ export default class App extends React.Component {
           >
             {this.state.qrcode}
           </Text>
-        </RNCamera>
+          </Camera>
+        {/* </RNCamera> */}
       </View>
     );
   }
